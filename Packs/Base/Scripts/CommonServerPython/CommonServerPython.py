@@ -1172,7 +1172,7 @@ def FormatIso8601(t):
     return t.strftime("%Y-%m-%dT%H:%M:%S")
 
 
-def argToList(arg, separator=','):
+def argToList(arg, separator=',', non_string_arg=False):
     """
        Converts a string representation of args to a python list
 
@@ -1181,6 +1181,10 @@ def argToList(arg, separator=','):
 
        :type separator: ``str``
        :param separator: A string separator to separate the strings, the default is a comma.
+       
+       :type non_string_arg: ``bool``
+       :param non_string_arg: Indicates whether to make a list of non string argument.
+       For example: argToList(1) => [1]
 
        :return: A python list of args
        :rtype: ``list``
@@ -1193,6 +1197,8 @@ def argToList(arg, separator=','):
         if arg[0] == '[' and arg[-1] == ']':
             return json.loads(arg)
         return [s.strip() for s in arg.split(separator)]
+    if non_string_arg:
+        return [arg]
     return arg
 
 
